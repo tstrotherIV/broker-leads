@@ -11,10 +11,13 @@
             <th class="text-center">Client Name</th>
             <th>Image</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody v-for="listing in current_listings" :key="listing.id">
-          <ListingItem :listing="listing" @claim-lead="claimListing" />
+          <ListingItem :listing="listing" @claim-lead="claimListing"
+          @delete-listing="deleteListing"
+           />
         </tbody>
       </template>
     </v-simple-table>
@@ -39,10 +42,12 @@ export default {
   methods: {
     async claimListing(home) {
       home.leadClaimed = true;
-      // const toEditListing = await db.collection("homes").doc(home.id).get();
       db.collection("homes").doc(home.id).update({
         leadClaimed: true,
-      })
+      });
+    },
+    async deleteListing(home) {
+      db.collection("homes").doc(home.id).delete();
     },
   },
 };

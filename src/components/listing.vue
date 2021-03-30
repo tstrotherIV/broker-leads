@@ -21,6 +21,9 @@
         buttonText
       }}</v-btn>
     </td>
+    <td class="pr-0">
+      <v-btn @click="handleDelete" color="red">Delete</v-btn>
+    </td>
   </tr>
 </template>
 
@@ -30,6 +33,18 @@ export default {
   methods: {
     handleClick() {
       this.$emit("claim-lead", this.listing);
+    },
+    handleDelete() {
+      if (
+        confirm(
+          "Are you sure you want to Delete this listing? It cannot be recovered after deletion!"
+        )
+      ) {
+        // Save it!
+        this.$emit("delete-listing", this.listing);
+      } else {
+        // Do nothing!
+      }
     },
   },
   computed: {

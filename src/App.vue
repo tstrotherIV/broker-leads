@@ -4,6 +4,8 @@
       <div class="d-flex align-center">Broker Leads</div>
       <v-spacer></v-spacer>
       <router-link to="/create" class="white--text"> Add Listing </router-link>
+      <v-btn v-if="user" text @click="signOut"> Sign Out </v-btn>
+      <v-btn v-else text @click="signIn"> Sign In </v-btn>
     </v-app-bar>
 
     <v-main><router-view></router-view> </v-main>
@@ -13,13 +15,34 @@
 <script>
 import { db } from "./firebase";
 import { mapMutations } from "vuex";
+import { auth, signIn, signOut } from "./firebase";
 
 export default {
   name: "App",
 
   components: {},
+  data() {
+    return {
+      user: auth.currentUser,
+    };
+  },
+  mounted() {
+    auth.onAuthStateChanged((user) => {
+      this.user = user;
+    });
+  },
   methods: {
     ...mapMutations(["setListingsData"]),
+    signIn() {
+      return signIn();
+    },
+    signOut() {
+      signOut();
+
+      if (this.$route.path != "/") {
+        this.$router.push("/");
+      }
+    },
   },
   created() {
     db.collection("homes").onSnapshot((snapshot) => {
@@ -33,10 +56,6 @@ export default {
       this.setListingsData(data);
     });
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 
