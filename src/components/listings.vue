@@ -4,12 +4,12 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-center">Address</th>
-            <th class="text-center">City</th>
-            <th class="text-center">State</th>
-            <th class="text-center">Zipcode</th>
-            <th class="text-center">Client Name</th>
-            <th>Image</th>
+            <th class="text-center">ADDRESS</th>
+            <th class="text-center">CITY</th>
+            <th class="text-center">STATE</th>
+            <th class="text-center">ZIPCODE</th>
+            <th class="text-center">CLIENT NAME</th>
+            <th class="text-center">IMAGE</th>
             <th></th>
             <th></th>
           </tr>

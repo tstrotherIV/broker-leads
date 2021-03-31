@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     current_listings: [],
+    adminUser: true,
   },
   mutations: {
     setListingsData(state, payload) {

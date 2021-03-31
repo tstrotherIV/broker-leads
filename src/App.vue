@@ -3,7 +3,13 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">Broker Leads</div>
       <v-spacer></v-spacer>
-      <router-link to="/create" class="white--text"> Add Listing </router-link>
+      <router-link
+        v-if="(adminUser = true) && user"
+        to="/create"
+        class="white--text"
+      >
+        Add Listing
+      </router-link>
       <v-btn v-if="user" text @click="signOut"> Sign Out </v-btn>
       <v-btn v-else text @click="signIn"> Sign In </v-btn>
     </v-app-bar>
@@ -14,7 +20,7 @@
 
 <script>
 import { db } from "./firebase";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { auth, signIn, signOut } from "./firebase";
 
 export default {
@@ -55,6 +61,9 @@ export default {
 
       this.setListingsData(data);
     });
+  },
+  computed: {
+    ...mapState(["adminUser"]),
   },
 };
 </script>
