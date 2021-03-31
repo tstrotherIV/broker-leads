@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import CreateListing from "../views/CreateListing.vue"
+import CreateListing from "../views/CreateListing.vue";
 
 Vue.use(VueRouter);
 
@@ -15,7 +15,7 @@ const routes = [
     path: "/create",
     name: "CreateListing",
     component: CreateListing,
-  }
+  },
 ];
 
 const router = new VueRouter({

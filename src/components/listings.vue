@@ -15,9 +15,11 @@
           </tr>
         </thead>
         <tbody v-for="listing in current_listings" :key="listing.id">
-          <ListingItem :listing="listing" @claim-lead="claimListing"
-          @delete-listing="deleteListing"
-           />
+          <ListingItem
+            :listing="listing"
+            @claim-lead="claimListing"
+            @delete-listing="deleteListing"
+          />
         </tbody>
       </template>
     </v-simple-table>
@@ -27,7 +29,7 @@
 <script>
 import { mapState } from "vuex";
 import ListingItem from "./listing.vue";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 export default {
   components: { ListingItem },
@@ -41,10 +43,12 @@ export default {
   },
   methods: {
     async claimListing(home) {
-      home.leadClaimed = true;
-      db.collection("homes").doc(home.id).update({
-        leadClaimed: true,
-      });
+      db.collection("homes")
+        .doc(home.id)
+        .update({
+          leadClaimed: !home.leadClaimed,
+          agentWhoClaimed: home.agentWhoClaimed ? "" : auth.currentUser.uid,
+        });
     },
     async deleteListing(home) {
       db.collection("homes").doc(home.id).delete();

@@ -30,6 +30,11 @@
 <script>
 export default {
   props: ["listing"],
+  data() {
+    return {
+      adminUser: true,
+    };
+  },
   methods: {
     handleClick() {
       this.$emit("claim-lead", this.listing);
@@ -49,10 +54,16 @@ export default {
   },
   computed: {
     buttonText() {
-      return this.listing.leadClaimed ? "Claimed" : "Claim Lead";
+      return this.listing.leadClaimed || this.listing.agentWhoClaimed
+        ? "Claimed"
+        : "Claim Lead";
     },
     buttonDisabled() {
-      return !this.listing.leadClaimed ? null : "disabled";
+      return !this.adminUser
+        ? this.listing.leadClaimed || this.listing.agentWhoClaimed
+          ? "disabled"
+          : null
+        : null;
     },
   },
 };

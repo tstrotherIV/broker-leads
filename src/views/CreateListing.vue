@@ -80,8 +80,7 @@
 </template>
 
 <script>
-import { db } from "../firebase";
-import { dbStorage } from "../firebase";
+import { db, auth, dbStorage } from "../firebase";
 
 export default {
   data: () => ({
@@ -151,6 +150,9 @@ export default {
         zipcode: this.zipcode,
         state: this.state,
         thumbnail: this.thumbnail,
+        leadClaimed: false,
+        agentWhoClaimed: null,
+        userId: auth.currentUser.uid,
       });
       this.clear();
       this.$router.push("/");
